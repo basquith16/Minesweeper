@@ -1,29 +1,78 @@
-body {
-  background: #fafafa;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
+.title_screen {
+  width: 100%;
+  height: 1000px;
+  background-color: black;
+  color: white;
 }
 
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 300px;
+.diffTitle {
+  margin: 100px 0 0 50px;
+  height: 35px;
   font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
+}
+#difficulty {
+  margin: 5px 0 0 50px;
+  width: 60px;
+  height: 20px;
 }
 
-.hero-unit h1 {
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
+#diffSelect {
+  margin: 5px 0 0 50px;
+  width: 60px;
+  height: 20px;
+}
+body {
+  background-image: url('/images/minesweeperbackground.jpg');
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+header {
+  text-align: center;
+  color: white;
+  font-size: 26px;
+  font-family: Myriad Pro;
+  text-shadow: 4px 4px black;
+  padding-bottom: 25px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gameboard {
+  margin: -10% 0 0 35%;
+}
+
+.timer {
+  height: 35px;
+  width: 135px;
+  border: 2px solid white;
+  margin-left: 25px;
+}
+
+.player_score {
+  height: 50px;
+  width: 75px;
+  border: 2px solid white;
+  margin: 75px 0 0 25px;
+}
+
+.row {
+  border: 1px solid white;
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  height: 100px;
+}
+
+.column {
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  width: 100px;
 }
