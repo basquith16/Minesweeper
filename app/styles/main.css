@@ -3,6 +3,7 @@
   height: 1000px;
   background-color: black;
   color: white;
+  display: none;
 }
 
 .diffTitle {
@@ -44,7 +45,7 @@ main {
 }
 
 .gameboard {
-  margin: -10% 0 0 35%;
+  margin: -15% 0 0 35%;
 }
 
 .timer {
@@ -61,18 +62,18 @@ main {
   margin: 75px 0 0 25px;
 }
 
-.row {
+.row1, .row2, .row3, .row4, .row5, .row6, .row7, .row8 {
   border: 1px solid white;
   display: flex;
   flex-direction: row;
   width: 400px;
-  height: 100px;
+  height: 50px;
 }
 
 .column {
   border: 1px solid white;
   display: flex;
   flex-direction: column;
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
 }
