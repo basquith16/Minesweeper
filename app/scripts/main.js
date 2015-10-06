@@ -1,26 +1,135 @@
-//global variables
-row = [];
-column = [];
+_.templateSettings = {
+  interpolate: /<%=([\s\S]+?)%>/g,
+  evaluate: /<%([\s\S]+?)%>/g
+};
+const API_ROOT = 'https://minesweeper-api.herokuapp.com/';
 
 
-//Difficulty 1
-var Gameboard1 = {
-  row: [0, 1, 2, 3, 4, 5, 6, 7],
-  column: [0, 1, 2, 3, 4, 5, 6, 7],
-}
 
-//Difficulty 2
-var Gameboard2 = {
-  row: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-  column: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-}
+//ROUTER
 
-//Difficulty 3
-var Gameboard3 = {
-  row: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-    20, 21, 22, 23, 24
-  ],
-  column: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-    19, 20, 21, 22, 23, 24
-  ]
-}
+var Router = Backbone.Router.extend({
+  routes: {
+    "": "index",
+    "game/:id": "showGame",
+  },
+
+  index: function() {
+    var indexView = new IndexView();
+    $('main').html(indexView.render());
+    console.log('index function ran')
+  },
+
+  showGame: function(gameId) {
+    console.log('showGame function began');
+    var game = new Game({
+      id: gameId
+    });
+    var gameView = new GameView({
+      model: game,
+
+    })
+  }
+});
+
+$(document).ready(function() {
+  var router = new Router();
+  Backbone.history.start();
+});
+
+
+//MODELS
+
+var Game = Backbone.Model.extend({
+  get urlRoot() {
+    return `${API_ROOT}/games`,
+      console.log('returned url')
+  },
+  defaults: {
+    mines: 0,
+    state: 'new'
+  }
+});
+
+
+// game.save();
+
+
+
+//VIEWS
+
+var IndexView = Backbone.View.extend({
+  template: $('#createTemplate').text(),
+
+  event: {
+    $('body').keydown(function(key) {
+        if (key.which == 13) {
+          `createGame`
+          console.log('Enter was pressed');
+
+          // $('#content').html(gameView.render())
+        }
+      }
+    }),
+
+  createGame: function(event) {
+    var diff = event.target.value;
+    console.log('game created');
+    var game = new Game({
+      difficulty: diff
+    });
+    game.save().then(function() {
+      Backbone.history.navigate(`/game/${game.get('id')}`, true);
+    });
+
+  },
+
+  render: function() {
+    this.$el.html(this.template);
+    return this.el;
+    console.log('template rendered')
+  }
+});
+
+var GameView = Backbone.View.extend({
+  template: _.template($('#gameTemplate').html()),
+
+  render: function() {
+    var gameTemplate = this.template(this.model.toJSON());
+    this.$el.html(gameTemplate);
+    var $table = $('table.game', this.$el);
+    _.each(this.model.get('board'), function(row, y) {
+      var $tr = $('<tr>');
+      _.each(row, function(col, x) {
+        var $td = $('<td>');
+        $td.data('x', x);
+        $td.data('y', y);
+        switch (col) {
+          case ' ':
+            $td.addClass('unrevealed');
+            break;
+          case '_':
+            $td.addClass('revealed');
+            break;
+          case 'F':
+            $td.addClass('flagged');
+            break;
+          case '*':
+            $td.addClass('mine');
+            break;
+          default:
+            $td.text(col);
+
+        }
+
+        $tr.append($td);
+      })
+      $table.append($tr);
+    });
+    return this.el;
+  },
+  initialize: function() {
+    this.listenTo(this.model, 'change', this.render);
+    this.model.fetch();
+  }
+});
