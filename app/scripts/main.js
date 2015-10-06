@@ -27,8 +27,8 @@ var Router = Backbone.Router.extend({
     });
     var gameView = new GameView({
       model: game,
-
-    })
+    });
+    $('main').html(gameView.render());
   }
 });
 
@@ -42,8 +42,8 @@ $(document).ready(function() {
 
 var Game = Backbone.Model.extend({
   get urlRoot() {
-    return `${API_ROOT}/games`,
-      console.log('returned url')
+    return API_ROOT + 'games';
+    console.log('returned url')
   },
   defaults: {
     mines: 0,
@@ -52,25 +52,16 @@ var Game = Backbone.Model.extend({
 });
 
 
-// game.save();
-
-
-
 //VIEWS
 
 var IndexView = Backbone.View.extend({
   template: $('#createTemplate').text(),
 
-  event: {
-    $('body').keydown(function(key) {
-        if (key.which == 13) {
-          `createGame`
-          console.log('Enter was pressed');
+  events: {
+    'change #diffSelect': 'createGame'
 
-          // $('#content').html(gameView.render())
-        }
-      }
-    }),
+    // $('#content').html(gameView.render())
+  },
 
   createGame: function(event) {
     var diff = event.target.value;
@@ -86,8 +77,9 @@ var IndexView = Backbone.View.extend({
 
   render: function() {
     this.$el.html(this.template);
+    console.log('template rendered');
     return this.el;
-    console.log('template rendered')
+
   }
 });
 
@@ -127,7 +119,9 @@ var GameView = Backbone.View.extend({
       $table.append($tr);
     });
     return this.el;
+    console.log('rendered gameboard')
   },
+
   initialize: function() {
     this.listenTo(this.model, 'change', this.render);
     this.model.fetch();

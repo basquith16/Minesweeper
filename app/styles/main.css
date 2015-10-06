@@ -21,64 +21,63 @@ body{
   height: 120px;
 }
 
-footer {
-  text-align: center;
-  margin-top: 250px;
-  font-size: 30px;
-  text-shadow: 4px 4px black;
-}
-.mainGame {
-  background-image: url('/images/minesweeperbackground.jpg');
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
 
 header {
   text-align: center;
-  color: white;
+  color: rgba(230, 230, 0, .7);
   font-size: 46px;
   font-family: Myriad Pro;
   text-shadow: 6px 6px black;
   padding-bottom: 0;
+  height: 250px;
+  margin-top: -50px;
 }
 
 main {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.gameboard {
-  margin: -15% 0 0 35%;
+.game{
+  margin: -70px 0 0 35%;
+  background-color: rgba(41, 82, 122, .8);
 }
 
-.timer {
+/*.timer {
   height: 35px;
   width: 135px;
   border: 2px solid white;
   margin-left: 25px;
-}
+}*/
 
-.player_score {
+/*.player_score {
   height: 50px;
   width: 75px;
   border: 2px solid white;
   margin: 75px 0 0 25px;
-}
+}*/
 
-.row1, .row2, .row3, .row4, .row5, .row6, .row7, .row8 {
+tr {
   border: 1px solid white;
   display: flex;
   flex-direction: row;
-  width: 400px;
-  height: 50px;
+  width: 300px;
+  height: 37px;
 }
 
-.empty {
+td {
   border: 1px solid white;
   display: flex;
   flex-direction: column;
-  height: 50px;
-  width: 50px;
+  height: 37px;
+  width: 37px;
+}
+
+.mines {
+  margin: -35% 0 0 3%;
+  background-color: rgba(26, 51, 76, .7);
+  width: 300px;
 }
