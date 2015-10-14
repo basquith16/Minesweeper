@@ -2,41 +2,10 @@ _.templateSettings = {
   interpolate: /<%=([\s\S]+?)%>/g,
   evaluate: /<%([\s\S]+?)%>/g
 };
+
+$(() => {
+
 const API_ROOT = 'https://minesweeper-api.herokuapp.com/';
-
-
-
-//ROUTER
-
-var Router = Backbone.Router.extend({
-  routes: {
-    "": "index",
-    "game/:id": "showGame",
-  },
-
-  index: function() {
-    var indexView = new IndexView();
-    $('main').html(indexView.render());
-    console.log('index function ran')
-  },
-
-  showGame: function(gameId) {
-    console.log('showGame function began');
-    var game = new Game({
-      id: gameId
-    });
-    var gameView = new GameView({
-      model: game,
-    });
-    $('main').html(gameView.render());
-  }
-});
-
-$(document).ready(function() {
-  var router = new Router();
-  Backbone.history.start();
-});
-
 
 //MODELS
 
@@ -48,6 +17,21 @@ var Game = Backbone.Model.extend({
   defaults: {
     mines: 0,
     state: 'new'
+  },
+
+  check: function (x,y) {
+    this.cellAction(x,y, '/check');
+  },
+
+  flag: function (x,y) {
+    this.cellAction(x,y,'/flag');
+  },
+  cellAction: function (x,y,action) {
+    this.save({ row: y, col:x } , {
+      url: this.url() + action,
+      method: 'POST',
+      patch: true
+    });
   }
 });
 
@@ -66,9 +50,7 @@ var IndexView = Backbone.View.extend({
   createGame: function(event) {
     var diff = event.target.value;
     console.log('game created');
-    var game = new Game({
-      difficulty: diff
-    });
+    var game = new Game({ difficulty: diff });
     game.save().then(function() {
       Backbone.history.navigate(`/game/${game.get('id')}`, true);
     });
@@ -85,6 +67,28 @@ var IndexView = Backbone.View.extend({
 
 var GameView = Backbone.View.extend({
   template: _.template($('#gameTemplate').html()),
+
+  events: {
+      'click td.unrevealed': 'checkCell',
+      'contextmenu td': 'flagCell'
+    },
+
+    checkCell: function (event) {
+      var $td = $(event.target);
+      var x = $td.data('x');
+      var y = $td.data('y');
+      this.model.check(x,y);
+    },
+
+    flagCell: function (event) {
+      event.preventDefault();
+      var $td = $(event.target);
+      var x = $td.data('x');
+      var y = $td.data('y');
+      if (! $td.hasClass('revealed')) {
+        this.model.flag(x,y);
+      }
+    },
 
   render: function() {
     var gameTemplate = this.template(this.model.toJSON());
@@ -111,7 +115,6 @@ var GameView = Backbone.View.extend({
             break;
           default:
             $td.text(col);
-
         }
 
         $tr.append($td);
@@ -126,4 +129,33 @@ var GameView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
     this.model.fetch();
   }
+});
+
+//ROUTER
+
+var Router = Backbone.Router.extend({
+  routes: {
+    "": "showIndex",
+    "game/:id": "showGame",
+  },
+
+  showIndex: function() {
+    var indexView = new IndexView();
+    $('main').html(indexView.render());
+    console.log('index function ran')
+  },
+
+  showGame: function(gameId) {
+    console.log('showGame function began');
+    var game = new Game({ id: gameId });
+    var gameView = new GameView({ model: game });
+    $('main').html(gameView.render());
+  },
+
+  initialize: function () {
+  Backbone.history.start();
+  }
+});
+
+var router = new Router();
 });
