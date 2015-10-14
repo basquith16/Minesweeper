@@ -5,7 +5,7 @@ html {
   body{
   width: 100%;
   min-height: 100%;
-  background-image: url('/images/minesweeperTitlePage.jpg');
+  background-image: url('../images/minesweeperTitlePage.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
@@ -96,7 +96,7 @@ td.unrevealed {
 }
 
 td.flagged {
-    background-image: url("/images/flag.png");
+    background-image: url("../images/flag.png");
     background-repeat: no-repeat;
     background-size: contain;
     align-items: center;
