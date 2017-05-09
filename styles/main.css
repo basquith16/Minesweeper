@@ -1,5 +1,17 @@
+<<<<<<< HEAD:styles/main.css
+html {
+  min-height: 100%;
+}
+
+  body{
+  width: 100%;
+  min-height: 100%;
+  background-image: url('../images/minesweeperTitlePage.jpg');
+  background-repeat: no-repeat;
+=======
 body {
   background-image: url('../images/minesweeperTitlePage.jpg');
+>>>>>>> master:styles/main.css
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
