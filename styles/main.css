@@ -1,25 +1,19 @@
-html {
-  min-height: 100%;
-}
-
-  body{
-  width: 100%;
-  min-height: 100%;
+body {
   background-image: url('../images/minesweeperTitlePage.jpg');
-  background-repeat: no-repeat;
   background-size: cover;
-  color: white;
-  z-index: 0;
+  background-repeat: no-repeat;
+  color: #fff;
+  padding: 2%;
 }
 
-.create{
-  margin: -20px 0 0 35%;
-  width: 360px;
-  height: 50px;
+.create {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 360px;
   font-size: 24px;
-  text-shadow: 3px 3px black;
-  border: 1px solid yellow;
-  padding: 17px 10px 10px 10px;
+  text-shadow: 1px 1px 1px black;
+  border: 1px solid #fff;
+  padding: 5px 10px;
   background-color: rgba(26, 51, 76, .7);
 }
 
@@ -36,22 +30,17 @@ html {
 
 header {
   text-align: center;
-  color: rgba(230, 230, 0, .7);
-  font-size: 40px;
-  font-family: Myriad Pro;
-  text-shadow: 6px 6px black;
+  color: rgba(230, 230, 0, .9);
+  font-size: 2em;
+  text-shadow: 1px 1px 1px black;
   padding-bottom: 0;
   height: 125px;
   margin-top: -50px;
 }
 
 main {
-  height: 100%;
+  height: auto;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
 }
 
 table.game{
@@ -89,7 +78,26 @@ td {
   width: 25px;
   line-height: 25px;
 }
-
+@media (max-width: 760px) {
+  tr {
+    height: 20px;
+  }
+  td {
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+  }
+}
+@media (max-width: 760px) {
+  tr {
+    height: 15px;
+  }
+  td {
+    height: 15px;
+    width: 15px;
+    line-height: 15px;
+  }
+}
 td.unrevealed {
     background-color: rgba(255, 255, 255, 0.2);
     z-index: 1;
@@ -115,23 +123,23 @@ td.mine {
   left: 5px;
   background-color: rgba(26, 51, 76, .7);
   width: auto;
-  font-size: 20px;
+  font-size: 1em;
   line-height: .3em;
-  text-shadow: 2px 2px black;
+  text-shadow: 1px 1px 1px black;
   border: 1px solid white;
   padding: 2px;
 }
 
 #resetButt {
   text-decoration: none;
-  color: white;
-  text-shadow: 2px 2px black;
+  color: #fff;
+  text-shadow: 1px 1px 1px black;
   position: absolute;
-  background-color: rgba(200, 200, 0, .7);
-  font-size: 24px;
+  background-color: rgba(200, 200, 0, .5);
+  font-size: 1.2em;
   border-radius: 5px;
-  border: 2px solid black;
-  top: 120px;
-  left: 140px;
-  padding: 5px;
+  border: 1px solid #fff;
+  top: 95px;
+  left: 115px;
+  padding: 0 5px;
 }
